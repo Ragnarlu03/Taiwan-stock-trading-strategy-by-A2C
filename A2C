@@ -1,0 +1,25 @@
+import pandas as pd
+import numpy as np
+import datetime
+import yfinance as yf
+
+from finrl.meta.preprocessor.yahoodownloader import YahooDownloader
+from finrl.meta.preprocessor.preprocessors import FeatureEngineer, data_split
+from finrl import config_tickers
+from finrl.config import INDICATORS
+
+import itertools
+
+TRAIN_START_DATE = '2009-01-05'
+TRAIN_END_DATE = '2020-12-31'
+TRADE_START_DATE = '2020-12-31'
+TRADE_END_DATE = '2023-12-31'
+
+df_raw = YahooDownloader(start_date = TRAIN_START_DATE,
+                     end_date = TRADE_END_DATE,
+                     ticker_list = TW_50_TICKER).fetch_data()
+
+TW50_df_yf = yf.download(tickers = "0050.TW", start='2009-01-05', end='2023-12-31')
+TW50_df_finrl = YahooDownloader(start_date = '2009-01-05',
+                                end_date = '2023-12-31',
+                                ticker_list = ['0050.TW']).fetch_data()
