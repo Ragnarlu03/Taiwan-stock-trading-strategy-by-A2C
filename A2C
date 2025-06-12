@@ -14,7 +14,6 @@ from finrl.meta.preprocessor.yahoodownloader import YahooDownloader
 from finrl.meta.preprocessor.preprocessors import FeatureEngineer, data_split
 from finrl import config_tickers
 from finrl.config import INDICATORS
-
 import itertools
 
 TRAIN_START_DATE = '2009-01-05'
@@ -95,7 +94,7 @@ check_and_make_directories([TRAINED_MODEL_DIR])
 
 train = pd.read_csv('train_data.csv')
 
-# If you are not using the data generated from part 1 of this tutorial, make sure
+# If you are not using the data generated from above, make sure
 # it has the columns and index in the form that could be make into the environment.
 # Then you can comment and skip the following two lines.
 train = train.set_index(train.columns[0])
@@ -135,10 +134,8 @@ agent = DRLAgent(env = env_train)
 # Set the corresponding values to 'True' for the algorithms that you want to use
 if_using_a2c = True
 
-Agent Training: 5 algorithms (A2C, DDPG, PPO, TD3, SAC)
-
-
-Agent 1: A2C
+#Agent Training
+#Agent 1: A2C
 
 agent = DRLAgent(env = env_train)
 model_a2c = agent.get_model("a2c")
@@ -186,7 +183,7 @@ trained_a2c = agent.train_model(model=model_a2c,
                              tb_log_name='a2c',
                              total_timesteps=200000) if if_using_a2c else None
 
-Backtest
+#Backtest
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -248,7 +245,7 @@ df_account_value_a2c, df_actions_a2c = DRLAgent.DRL_prediction(
     model=trained_a2c,
     environment = e_trade_gym) if if_using_a2c else (None, None)
 
-Mean Variance Optimization
+#Mean Variance Optimization
 
 def process_df_for_mvo(df):
   return df.pivot(index="date", columns="tic", values="close")
@@ -287,7 +284,7 @@ np.set_printoptions(precision=3, suppress = True)
 print('Mean returns of assets in k-portfolio 1\n', meanReturns)
 print('Variance-Covariance matrix of returns\n', covReturns)
 
-Pypofolioopt
+#Pypofolioopt
 
 from pypfopt.efficient_frontier import EfficientFrontier
 
@@ -305,7 +302,7 @@ Portfolio_Assets = TradeData @ Initial_Portfolio
 MVO_result = pd.DataFrame(Portfolio_Assets, columns=["Mean Var"])
 MVO_result
 
-0050 index
+#0050 index
 
 TRAIN_START_DATE = '2009-01-05'
 TRAIN_END_DATE = '2020-12-31'
@@ -328,7 +325,7 @@ TW0050 = pd.merge(
     right_index=True,
 ).set_index("date")
 
-Result
+#Result
 
 df_result_a2c = (
     df_account_value_a2c.set_index(df_account_value_a2c.columns[0])
